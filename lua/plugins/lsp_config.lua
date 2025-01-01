@@ -47,6 +47,9 @@ return {
                 if client.supports_method('textDocument/rename') then
                     vim.keymap.set("n", "grn", vim.lsp.buf.rename, {})
                 end
+                if client.supports_method('textDocument/references') then
+                    vim.keymap.set("n", "grr", vim.lsp.buf.references, {})
+                end
                 if client.supports_method('textDocument/implementation') then
                     vim.keymap.set("n", "gri", vim.lsp.buf.implementation, {})
                 end
