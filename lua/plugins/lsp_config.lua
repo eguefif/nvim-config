@@ -22,13 +22,12 @@ return {
                 }
             }
         }
-        require('lspconfig').ruff.setup({
-            init_options = {
-                settings = {
-                    -- Server settings should go here
-                }
-            }
-        })
+        require 'lspconfig'.sqlls.setup {}
+        require 'lspconfig'.rubocop.setup {}
+        require 'lspconfig'.ruby_lsp.setup {
+            filetypes = { 'ruby' },
+        }
+        require('lspconfig').ruff.setup {}
 
         vim.api.nvim_create_autocmd('LspAttach', {
             callback = function(args)
@@ -44,14 +43,21 @@ return {
                     })
                 end
 
+
+                if client.supports_method('textDocument/code_action') then
+                    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
+                end
+                if client.supports_method('textDocument/definition') then
+                    vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
+                end
                 if client.supports_method('textDocument/rename') then
-                    vim.keymap.set("n", "grn", vim.lsp.buf.rename, {})
+                    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
                 end
                 if client.supports_method('textDocument/references') then
-                    vim.keymap.set("n", "grr", vim.lsp.buf.references, {})
+                    vim.keymap.set("n", "<leader>lr", vim.lsp.buf.references, {})
                 end
                 if client.supports_method('textDocument/implementation') then
-                    vim.keymap.set("n", "gri", vim.lsp.buf.implementation, {})
+                    vim.keymap.set("n", "<leader>li", vim.lsp.buf.implementation, {})
                 end
             end,
         })

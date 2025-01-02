@@ -27,7 +27,7 @@ return {
             }
         end)
 
-        -- Loop in nvim config
+        -- Look in nvim config
         vim.keymap.set("n", "<leader>en", function()
             builtin.find_files {
                 cwd = vim.fn.stdpath("config")
